@@ -1,5 +1,10 @@
 import { Component } from 'react';
-import { Box } from 'constans';
+//
+import { Statistics } from 'components/feedback/statistics';
+import { FeedbackOptions } from './feedbackOptions';
+import { Section } from './section';
+import { Notification } from './notification';
+
 export class Feedback extends Component {
   state = {
     good: 0,
@@ -7,38 +12,44 @@ export class Feedback extends Component {
     bad: 0,
   };
 
-  handleIncrement = () => {
-    this.setState((state, props) => ({
-      value: state.value + props.step,
+  handleIncrement = evt => {
+    const name = evt.target.name;
+    this.setState(prevState => ({
+      [name]: prevState[name] + 1,
     }));
   };
 
-  handleDecrement = () => {
-    this.setState((state, props) => ({
-      value: state.value - props.step,
-    }));
+  countTotalFeedback = () => {
+    const ArrCountFeedback = Object.values(this.state);
+    let totalFeedback = 0;
+    for (let i = 0; i < ArrCountFeedback.length; i += 1) {
+      totalFeedback += ArrCountFeedback[i];
+    }
+    return totalFeedback;
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    return Math.round((this.state.good / this.countTotalFeedback()) * 100);
   };
 
   render() {
-    const { step } = this.props;
-
     return (
-      <Box
-        width="400px"
-        pt={1}
-        ml="auto"
-        mr="auto"
-        mt={5}
-        boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"
-      >
-        <span>0</span>
-        <button type="button" onClick={this.handleIncrement}>
-          Increment by {step}
-        </button>
-        <button type="button" onClick={this.handleDecrement}>
-          Decrement by {step}
-        </button>
-      </Box>
+      <Section title="Please leave feedback">
+        <FeedbackOptions onLeaveFeedback={this.handleIncrement} />
+        <>
+          {!this.countTotalFeedback() ? (
+            <Notification message="There is no feedback" />
+          ) : (
+            <Statistics
+              good={this.state.good}
+              neutral={this.state.neutral}
+              bad={this.state.bad}
+              total={this.countTotalFeedback()}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            />
+          )}
+        </>
+      </Section>
     );
   }
 }

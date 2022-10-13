@@ -8,6 +8,7 @@ export const theme = {
     text: 'black',
     green: '#00ff00',
     red: '#ff0000',
+    blue: '0000ff',
     tableTextColor: '#686461',
     theadBgColor: '#8FD4C1',
     tableTrSecondaryBgColor: '#E8E6D1',
@@ -40,6 +41,7 @@ export const theme = {
   radii: {
     none: '0',
     normal: '4px',
+    medium: '10px',
     round: '50%',
   },
   shadows: {
