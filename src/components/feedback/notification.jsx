@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { Box } from 'constans';
 
 export const Notification = ({ message }) => (
@@ -5,3 +7,7 @@ export const Notification = ({ message }) => (
     {message}
   </Box>
 );
+
+Notification.propTypes = {
+  message: PropTypes.string.isRequired,
+};

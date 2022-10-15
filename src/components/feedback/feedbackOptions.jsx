@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Box } from 'constans';
 import { Button } from './feedbackOptions.styled';
 export const FeedbackOptions = ({ onLeaveFeedback }) => {
@@ -14,4 +15,8 @@ export const FeedbackOptions = ({ onLeaveFeedback }) => {
       </Button>
     </Box>
   );
+};
+
+FeedbackOptions.propTypes = {
+  onLeaveFeedback: PropTypes.func.isRequired,
 };
